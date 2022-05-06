@@ -59,8 +59,19 @@ public class ScenarioV14 {
     }
 
     /**
-     * In ScenarioV12 we used the Consumer interface, which performs something but does not
-     * return anything.  What if we need a function that takes nothing and provides something.
-     * See ScenarioV14.
+     * In a typical application, one might find code that does something like the following:
+     *
+     * Step 1: Read data from a source and build a collection of data.
+     *
+     * Step 2: Iterate through that collection and perform something on each data object (paint each house).
+     *
+     * Step 3: Iterate through the same collection and perform some other task on each data object
+     * (e.g., fix each house that's broken)
+     *
+     * Step 4: Iterate through the same collection again and derive something from each data object
+     * (e.g., count the number of residents from each house).
+     *
+     * Can this process be applied to all applications - meaning iterate through a collection several times?
+     * We'll examine this question in ScenarioV15.
      */
 }

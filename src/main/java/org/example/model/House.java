@@ -56,6 +56,10 @@ public class House {
         return state;
     }
 
+    public Color getColor() {
+        return color;
+    }
+
     public void setColor(Color color) {
         this.color = color;
     }

@@ -42,4 +42,18 @@ public class Print {
 
         System.out.println("---------------------------");
     }
+
+    public static void showVillages(List<List<House>> villages) {
+
+        villages.stream()
+                .forEach(village -> {
+                    System.out.println("Village");
+                    showNeighborhood(village);
+                });
+    }
+
+    public static void showColor(House house) {
+
+        System.out.println(house.getColor());
+    }
 }
