@@ -1,4 +1,4 @@
-package org.example.sceanrio.function;
+package org.example.scenario.function;
 
 @FunctionalInterface
 public interface ResidentCounterV2<Input, Output> {

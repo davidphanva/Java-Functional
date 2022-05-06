@@ -1,4 +1,4 @@
-package org.example.sceanrio.stream;
+package org.example.scenario.stream;
 
 import org.example.data.HouseProviderV1;
 import org.example.model.Color;
@@ -6,7 +6,6 @@ import org.example.model.HomeStyle;
 import org.example.model.House;
 import org.example.util.Print;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;

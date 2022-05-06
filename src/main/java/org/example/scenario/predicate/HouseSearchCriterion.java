@@ -1,4 +1,4 @@
-package org.example.sceanrio.predicate;
+package org.example.scenario.predicate;
 
 
 @FunctionalInterface

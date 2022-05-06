@@ -1,4 +1,4 @@
-package org.example.sceanrio.consumer;
+package org.example.scenario.consumer;
 
 import org.example.data.HouseProviderV1;
 import org.example.model.Color;
@@ -7,11 +7,8 @@ import org.example.model.House;
 import org.example.model.State;
 import org.example.util.Print;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 /**
  * In this scenario, we'll explore the use of the Consumer interface.  So

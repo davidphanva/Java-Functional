@@ -1,4 +1,4 @@
-package org.example.sceanrio.predicate;
+package org.example.scenario.predicate;
 
 import org.example.data.HouseProviderV1;
 import org.example.model.HomeStyle;

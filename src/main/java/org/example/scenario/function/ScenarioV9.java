@@ -1,4 +1,4 @@
-package org.example.sceanrio.function;
+package org.example.scenario.function;
 
 import org.example.data.HouseProviderV1;
 import org.example.model.House;
@@ -7,16 +7,15 @@ import org.example.util.Print;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
 /**
- * In ScenarioV10, we are going to use java.util.function.Function instead of
- * DataExtractor.
+ * In ScenarioV9, we are going to use DataExtractor instead of
+ * AddressExtractorV2 and ResidentCounterV2.
  */
-public class ScenarioV10 {
+public class ScenarioV9 {
 
     public static void main( String[] args ) {
-        System.out.println("ScenarioV10");
+        System.out.println("ScenarioV9");
         System.out.println("============================");
 
         final List<House> neighborhood = HouseProviderV1.neighborhood();
@@ -32,15 +31,15 @@ public class ScenarioV10 {
         // Note: again, we need to specify types for DataExtractor.
         final Map<String, Integer> map2 = createAddressAndResidentCountMap(
                 neighborhood,
-                new Function<House, String>() {
+                new DataExtractor<House, String>() {
                     @Override
-                    public String apply(House house) {
+                    public String extract(House house) {
                         return house.getAddress();
                     }
                 },
-                new Function<House, Integer>() {
+                new DataExtractor<House, Integer>() {
                     @Override
-                    public Integer apply(House house) {
+                    public Integer extract(House house) {
                         return house.getResidents().size();
                     }
                 }
@@ -57,50 +56,55 @@ public class ScenarioV10 {
         Print.showAddressAndResidentCount(map3);
     }
 
-    // Note: We need to provide types to use Function
+    // Note: We need to provide types to use DataExtractor
     public static Map<String, Integer> createAddressAndResidentCountMap(
             List<House> houses,
-            Function<House, String> addressExtractor,
-            Function<House, Integer> residentCounter) {
+            DataExtractor<House, String> addressExtractor,
+            DataExtractor<House, Integer> residentCounter) {
 
         Map<String, Integer> map = new HashMap<>();
 
         for (House house : houses) {
 
-            map.put(addressExtractor.apply(house), residentCounter.apply(house));
+            map.put(addressExtractor.extract(house), residentCounter.extract(house));
         }
 
         return map;
     }
 
-    // Note: We still need to specify House and String as the Input and Output
-    // types.  And now we implement the apply method instead of the extract method.
-    static class AddressExtractorImpl implements Function<House, String> {
+    // Note: Beside specifying House as the Input type and String as the Output
+    // type, the implementation of the extract method does not change.
+    // Also this class implements DataExtractor instead of AddressExtractorV2.
+    static class AddressExtractorImpl implements DataExtractor<House, String> {
 
         @Override
-        public String apply(House house) {
+        public String extract(House house) {
             return house.getAddress();
         }
     }
 
     // Note: Similarly, House is the Input type and Integer is the Output
-    // type as Function requires.
-    static class ResidentCountImpl implements Function<House, Integer> {
+    // type as DataExtractor requires.  Now, this class implements
+    // the extract method instead of the count method.  But the internal
+    // implementation does not change.
+    static class ResidentCountImpl implements DataExtractor<House, Integer> {
 
         @Override
-        public Integer apply(House house) {
+        public Integer extract(House house) {
             return house.getResidents().size();
         }
     }
-
     /**
-     * In summary, lambda expressions are powerful and concise.  They take a little bit
-     * of effort to get used to.  But they require no changes as we saw in the last
-     * few scenarios.  And because Java 8 provides interfaces such as Predicate and
-     * Function, we can use them and write even less code.  Yay!
+     * So what does the DataExtractor interface do?  It's just a way to specify
+     * a function, which takes a type as input and returns a different type.  All the
+     * logic of such functions would be wrapped in the extract method.
      *
-     * Is that all the Function interface can do?  This interface has other
-     * default methods such as compose and andThen.  How do we use these?
-     * See ScenarioV11.
+     * But if we think about it, there are a lot of functions that take an input
+     * and returns something else as output.  Their implementations may be different
+     * but their signatures are the same from generics standpoint.
+     *
+     * In fact Java 8 already provides an interface that is similar to DataExtractor,
+     * but in a more general way.  It's the jav.util.Function interface.  Let's use this
+     * in ScenarioV10 so we don't even have to define DataExtractor.
      */
 }

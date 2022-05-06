@@ -1,4 +1,4 @@
-package org.example.sceanrio.supplier;
+package org.example.scenario.supplier;
 
 import org.example.data.HouseProviderV1;
 import org.example.model.Color;

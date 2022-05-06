@@ -1,4 +1,4 @@
-package org.example.sceanrio.function;
+package org.example.scenario.function;
 
 import org.example.model.House;
 

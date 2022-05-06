@@ -1,11 +1,9 @@
-package org.example.sceanrio.predicate;
+package org.example.scenario.predicate;
 
 import org.example.data.HouseProviderV1;
-import org.example.model.HomeStyle;
 import org.example.model.House;
 import org.example.util.Print;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**

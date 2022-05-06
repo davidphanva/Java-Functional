@@ -1,4 +1,4 @@
-package org.example.sceanrio.stream;
+package org.example.scenario.stream;
 
 import java.util.Random;
 import java.util.stream.Stream;
