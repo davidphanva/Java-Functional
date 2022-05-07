@@ -1,15 +1,15 @@
 package org.example.scenario.predicate;
 
-import org.example.data.HouseProviderV1;
-import org.example.model.HomeStyle;
-import org.example.model.House;
+import org.example.data.HutProviderV1;
+import org.example.model.Style;
+import org.example.model.Hut;
 import org.example.util.Print;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * ScenarioV2 demonstrates searching for House objects by different criteria.
+ * ScenarioV2 demonstrates searching for Hut objects by different criteria.
  * Here, we're going to use procedural approach.
  */
 public class ScenarioV2 {
@@ -18,57 +18,57 @@ public class ScenarioV2 {
         System.out.println("ScenarioV2");
         System.out.println("============================");
 
-        final List<House> neighborhood = HouseProviderV1.neighborhood();
+        final List<Hut> neighborhood = HutProviderV1.neighborhood();
 
-        final List<House> fourResidents = byResidentCount(neighborhood, 4);
-        Print.showNeighborhood(fourResidents);
+        final List<Hut> fourResidents = byResidentCount(neighborhood, 4);
+        Print.showHuts(fourResidents);
 
-        final List<House> modernHomes = byHomeStyle(neighborhood, HomeStyle.MODERN);
-        Print.showNeighborhood(modernHomes);
+        final List<Hut> modernHomes = byHomeStyle(neighborhood, Style.MODERN);
+        Print.showHuts(modernHomes);
 
-        final List<House> stoogiesHome = byAddress(neighborhood, "123 Comical Lane");
-        Print.showNeighborhood(stoogiesHome);
+        final List<Hut> stoogiesHome = byAddress(neighborhood, "123 Comical Lane");
+        Print.showHuts(stoogiesHome);
     }
 
-    public static List<House> byResidentCount(List<House> houses, int desiredCount) {
+    public static List<Hut> byResidentCount(List<Hut> huts, int desiredCount) {
 
-        List<House> found = new ArrayList<>();
+        List<Hut> found = new ArrayList<>();
 
-        for (House house : houses) {
+        for (Hut hut : huts) {
 
-            if (house.getResidents().size() == desiredCount) {
+            if (hut.getResidents().size() == desiredCount) {
 
-                found.add(house);
+                found.add(hut);
             }
         }
 
         return found;
     }
 
-    public static List<House> byHomeStyle(List<House> houses, HomeStyle desiredHomeStyle) {
+    public static List<Hut> byHomeStyle(List<Hut> huts, Style desiredStyle) {
 
-        List<House> found = new ArrayList<>();
+        List<Hut> found = new ArrayList<>();
 
-        for (House house : houses) {
+        for (Hut hut : huts) {
 
-            if (house.getHomeStyle() == desiredHomeStyle) {
+            if (hut.getStyle() == desiredStyle) {
 
-                found.add(house);
+                found.add(hut);
             }
         }
 
         return found;
     }
 
-    public static List<House> byAddress(List<House> houses, String desiredAddress) {
+    public static List<Hut> byAddress(List<Hut> huts, String desiredAddress) {
 
-        List<House> found = new ArrayList<>();
+        List<Hut> found = new ArrayList<>();
 
-        for (House house : houses) {
+        for (Hut hut : huts) {
 
-            if (house.getAddress().equalsIgnoreCase(desiredAddress)) {
+            if (hut.getAddress().equalsIgnoreCase(desiredAddress)) {
 
-                found.add(house);
+                found.add(hut);
             }
         }
 
@@ -79,20 +79,20 @@ public class ScenarioV2 {
      * What if we need to search by other criteria.  Do we need to copy/paste these methods
      * and then change the code that enforce the criteria?
      *
-     public static List<House> bySomeCriteria(List<House> houses, SomeCriteriaType criteria) {
+     public static List<Hut> bySomeCriteria(List<Hut> huts, SomeCriteriaType criteria) {
 
      // Create a list to hold return value
-     List<House> found = new ArrayList<>();
+     List<Hut> found = new ArrayList<>();
 
-     // A general loop to go through each House object
-     for (House house : houses) {
+     // A general loop to go through each Hut object
+     for (Hut hut : huts) {
 
          // Here is the logic to enforce criteria.  This is where
          // the code differs.  What if we move this logic out of here
          // and into something else?  See ScenarioV3.
-         if (house.getAddress().equalsIgnoreCase(desiredAddress)) {
+         if (hut.getAddress().equalsIgnoreCase(desiredAddress)) {
 
-            found.add(house);
+            found.add(hut);
          }
      // Stop enforcing criteria
      }

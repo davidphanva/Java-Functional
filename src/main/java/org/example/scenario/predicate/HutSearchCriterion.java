@@ -2,7 +2,7 @@ package org.example.scenario.predicate;
 
 
 @FunctionalInterface
-public interface HouseSearchCriterion<H> {
+public interface HutSearchCriterion<H> {
 
     boolean matchesWith(H h);
 }

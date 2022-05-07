@@ -1,8 +1,8 @@
 package org.example.scenario.supplier;
 
-import org.example.data.HouseProviderV1;
+import org.example.data.HutProviderV1;
 import org.example.model.Color;
-import org.example.model.House;
+import org.example.model.Hut;
 import org.example.util.Print;
 
 import java.util.List;
@@ -22,9 +22,9 @@ public class ScenarioV14 {
         System.out.println("ScenarioV14");
         System.out.println("============================");
 
-        final List<House> neighborhood = HouseProviderV1.neighborhood();
+        final List<Hut> neighborhood = HutProviderV1.neighborhood();
 
-        Print.showNeighborhood(neighborhood);
+        Print.showHuts(neighborhood);
 
         final Random RANDOM = new Random();
         Supplier<Color> randomDecisionMaker = () -> {
@@ -32,14 +32,14 @@ public class ScenarioV14 {
             return Color.values()[RANDOM.nextInt(Color.values().length)];
         };
 
-        BiConsumer<House, Supplier<Color>> painter = (house, decisionMaker) -> {
+        BiConsumer<Hut, Supplier<Color>> painter = (house, decisionMaker) -> {
 
             house.setColor(decisionMaker.get());
         };
 
         performWorkOnHouses(neighborhood, painter, randomDecisionMaker);
 
-        Print.showNeighborhood(neighborhood);
+        Print.showHuts(neighborhood);
     }
 
     /**
@@ -48,13 +48,13 @@ public class ScenarioV14 {
      * chain the supporting functions together.
      */
     public static void performWorkOnHouses(
-            List<House> houses,
-            BiConsumer<House, Supplier<Color>> painter,
+            List<Hut> huts,
+            BiConsumer<Hut, Supplier<Color>> painter,
             Supplier<Color> randomDecisionMaker) {
 
-        for (House house : houses) {
+        for (Hut hut : huts) {
 
-            painter.accept(house, randomDecisionMaker);
+            painter.accept(hut, randomDecisionMaker);
         }
     }
 

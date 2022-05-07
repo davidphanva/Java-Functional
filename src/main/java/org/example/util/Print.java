@@ -1,13 +1,24 @@
 package org.example.util;
 
 import org.example.model.House;
+import org.example.model.Hut;
 
 import java.util.List;
 import java.util.Map;
 
 public class Print {
 
-    public static void showNeighborhood(List<House> neighborhood) {
+    public static void showHuts(List<Hut> neighborhood) {
+
+        for (Hut hut : neighborhood) {
+
+            System.out.println(hut);
+        }
+
+        System.out.println("---------------------------");
+    }
+
+    public static void showHouses(List<House> neighborhood) {
 
         for (House house : neighborhood) {
 
@@ -30,7 +41,7 @@ public class Print {
         System.out.println("---------------------------");
     }
 
-    public static void showAddressAndSumOfHouseNumber(Map<String, Integer> map) {
+    public static void showAddressAndSumOfNumber(Map<String, Integer> map) {
 
         for (Map.Entry<String, Integer> entry : map.entrySet()) {
 
@@ -43,17 +54,14 @@ public class Print {
         System.out.println("---------------------------");
     }
 
-    public static void showVillages(List<List<House>> villages) {
+    public static void showHutVillages(List<List<Hut>> villages) {
 
         villages.stream()
                 .forEach(village -> {
                     System.out.println("Village");
-                    showNeighborhood(village);
+                    showHuts(village);
                 });
     }
 
-    public static void showColor(House house) {
 
-        System.out.println(house.getColor());
-    }
 }

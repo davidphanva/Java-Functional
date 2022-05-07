@@ -1,7 +1,7 @@
 package org.example.scenario.function;
 
-import org.example.data.HouseProviderV1;
-import org.example.model.House;
+import org.example.data.HutProviderV1;
+import org.example.model.Hut;
 import org.example.util.Print;
 
 import java.util.HashMap;
@@ -18,7 +18,7 @@ public class ScenarioV7 {
         System.out.println("ScenarioV7");
         System.out.println("============================");
 
-        final List<House> neighborhood = HouseProviderV1.neighborhood();
+        final List<Hut> neighborhood = HutProviderV1.neighborhood();
 
         // First method - use objects created from static classes
         final Map<String, Integer> map1 = createAddressAndResidentCountMap(
@@ -32,14 +32,14 @@ public class ScenarioV7 {
                 neighborhood,
                 new AddressExtractorV1() {
                     @Override
-                    public String extract(House house) {
-                        return house.getAddress();
+                    public String extract(Hut hut) {
+                        return hut.getAddress();
                     }
                 },
                 new ResidentCounterV1() {
                     @Override
-                    public Integer count(House house) {
-                        return house.getResidents().size();
+                    public Integer count(Hut hut) {
+                        return hut.getResidents().size();
                     }
                 }
         );
@@ -48,22 +48,22 @@ public class ScenarioV7 {
         // Third method - Use lambda expressions
         final Map<String, Integer> map3 = createAddressAndResidentCountMap(
                 neighborhood,
-                house -> house.getAddress(),
-                house -> house.getResidents().size()
+                hut -> hut.getAddress(),
+                hut -> hut.getResidents().size()
         );
         Print.showAddressAndResidentCount(map3);
     }
 
     public static Map<String, Integer> createAddressAndResidentCountMap(
-            List<House> houses,
+            List<Hut> huts,
             AddressExtractorV1 addressExtractor,
             ResidentCounterV1 residentCounter) {
 
         Map<String, Integer> map = new HashMap<>();
 
-        for (House house : houses) {
+        for (Hut hut : huts) {
 
-            map.put(addressExtractor.extract(house), residentCounter.count(house));
+            map.put(addressExtractor.extract(hut), residentCounter.count(hut));
         }
 
         return map;
@@ -72,16 +72,16 @@ public class ScenarioV7 {
     static class AddressExtractorImpl implements AddressExtractorV1 {
 
         @Override
-        public String extract(House house) {
-            return house.getAddress();
+        public String extract(Hut hut) {
+            return hut.getAddress();
         }
     }
 
     static class ResidentCountImpl implements ResidentCounterV1 {
 
         @Override
-        public Integer count(House house) {
-            return house.getResidents().size();
+        public Integer count(Hut hut) {
+            return hut.getResidents().size();
         }
     }
     /**

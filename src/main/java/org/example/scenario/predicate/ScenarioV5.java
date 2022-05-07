@@ -1,8 +1,8 @@
 package org.example.scenario.predicate;
 
-import org.example.data.HouseProviderV1;
-import org.example.model.HomeStyle;
-import org.example.model.House;
+import org.example.data.HutProviderV1;
+import org.example.model.Style;
+import org.example.model.Hut;
 import org.example.util.Print;
 
 import java.util.ArrayList;
@@ -19,32 +19,32 @@ public class ScenarioV5 {
         System.out.println("ScenarioV5");
         System.out.println("============================");
 
-        final List<House> neighborhood = HouseProviderV1.neighborhood();
+        final List<Hut> neighborhood = HutProviderV1.neighborhood();
 
-        final Predicate<House> fourResidentCriterion =
-                house -> house.getResidents().size() == 4;
-        final List<House> fourResidents = searchByCriterion(neighborhood, fourResidentCriterion);
-        Print.showNeighborhood(fourResidents);
+        final Predicate<Hut> fourResidentCriterion =
+                hut -> hut.getResidents().size() == 4;
+        final List<Hut> fourResidents = searchByCriterion(neighborhood, fourResidentCriterion);
+        Print.showHuts(fourResidents);
 
-        final Predicate<House> modernHomeCriterion =
-                house -> house.getHomeStyle() == HomeStyle.MODERN;
-        final List<House> modernHomes = searchByCriterion(neighborhood, modernHomeCriterion);
-        Print.showNeighborhood(modernHomes);
+        final Predicate<Hut> modernHomeCriterion =
+                hut -> hut.getStyle() == Style.MODERN;
+        final List<Hut> modernHomes = searchByCriterion(neighborhood, modernHomeCriterion);
+        Print.showHuts(modernHomes);
 
-        final Predicate<House> stoogiesHomeCriterion =
-                house -> house.getAddress().equalsIgnoreCase("123 Comical Lane");
-        final List<House> stoogiesHome = searchByCriterion(neighborhood, stoogiesHomeCriterion);
-        Print.showNeighborhood(stoogiesHome);
+        final Predicate<Hut> stoogiesHomeCriterion =
+                hut -> hut.getAddress().equalsIgnoreCase("123 Comical Lane");
+        final List<Hut> stoogiesHome = searchByCriterion(neighborhood, stoogiesHomeCriterion);
+        Print.showHuts(stoogiesHome);
     }
 
-    public static List<House> searchByCriterion(List<House> houses, Predicate<House> criterion) {
+    public static List<Hut> searchByCriterion(List<Hut> huts, Predicate<Hut> criterion) {
 
-        List<House> found = new ArrayList<>();
+        List<Hut> found = new ArrayList<>();
 
-        for (House house : houses) {
+        for (Hut hut : huts) {
 
-            if (criterion.test(house))
-                found.add(house);
+            if (criterion.test(hut))
+                found.add(hut);
         }
 
         return found;

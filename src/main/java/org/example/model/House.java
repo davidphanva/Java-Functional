@@ -1,45 +1,62 @@
 package org.example.model;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class House {
+public final class House {
 
-    private String address;
-    private Color color;
-    private HomeStyle homeStyle;
-    private State state;
-    private boolean hasDeck = false;
-    private List<String> residents;
+    private final String address;
+    private final Color color;
+    private final Style style;
+    private final State state;
+    private final boolean hasDeck;
+    private final List<String> residents;
 
 
+    // static factory method
     public static House from(String address) {
 
-        return from(address, Color.YELLOW, HomeStyle.MODERN, Collections.EMPTY_LIST);
+        return from(address, Color.YELLOW, Style.MODERN, Collections.EMPTY_LIST);
     }
 
-    public static House from(String address, HomeStyle homeStyle) {
+    // static factory method
+    public static House from(String address, Style style) {
 
-        return from(address, Color.GRAY, homeStyle, Collections.EMPTY_LIST);
+        return from(address, Color.GRAY, style, Collections.EMPTY_LIST);
     }
 
-    public static House from(String address, Color color, HomeStyle homeStyle, List<String> residents) {
+    // static factory method
+    public static House from(String address, Color color, Style style, List<String> residents) {
 
-        House house = new House();
+        House hut = new House(address,
+                color,
+                style,
+                style == Style.HISTORIC ? State.BROKEN : State.FUNCTIONAL,
+                false,
+                residents);
 
-        house.address = address;
-        house.color = color;
-        house.homeStyle = homeStyle;
-        house.state = house.homeStyle == HomeStyle.HISTORIC ? State.BROKEN : State.FUNCTIONAL;
-        house.residents = new ArrayList<>();
-
-        if (residents != null)
-            house.residents.addAll(residents);
-
-        return house;
+        return hut;
     }
 
+    // static factory method
+    public static House from(String address,
+                             Color color,
+                             Style style,
+                             State state,
+                             boolean hasDeck,
+                             List<String> residents) {
+
+        House hut = new House(address,
+                color,
+                style,
+                state,
+                hasDeck,
+                residents);
+
+        return hut;
+    }
+
+    // Getters are provided
     public String getAddress() {
         return address;
     }
@@ -48,8 +65,8 @@ public class House {
         return residents;
     }
 
-    public HomeStyle getHomeStyle() {
-        return homeStyle;
+    public Style getStyle() {
+        return style;
     }
 
     public State getState() {
@@ -60,16 +77,39 @@ public class House {
         return color;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
+    // Immutable classes should not provide setters, as we don't want to provide
+    // a means to change objects.  But sometimes, changes to objects are
+    // necessary.  One way to deal with this is to provide a new object that
+    // contains the desired changes.  Doing so enables us to adhere to the
+    // immutability paradigm.
+    public House setColor(Color color) {
+
+        return new House(this.address,
+                color,
+                this.style,
+                this.state,
+                this.hasDeck,
+                this.residents);
     }
 
-    public void setState(State state) {
-        this.state = state;
+    public House setState(State state) {
+
+        return new House(this.address,
+                this.color,
+                this.style,
+                state,
+                this.hasDeck,
+                this.residents);
     }
 
-    public void addDeck() {
-        this.hasDeck = true;
+    public House addDeck() {
+
+        return new House(this.address,
+                this.color,
+                this.style,
+                this.state,
+                this.hasDeck,
+                this.residents);
     }
 
     @Override
@@ -77,12 +117,22 @@ public class House {
         return "House{" +
                 "address='" + address + '\'' +
                 ", color=" + color +
-                ", homeStyle=" + homeStyle +
+                ", style=" + style +
                 ", state=" + state +
                 ", hasDeck=" + hasDeck +
                 ", residents=" + residents +
                 '}';
     }
 
-    private House() {}
+    // Constructor is kept private but static factory methods are provided to create objects.
+    // This enables the separation of how objects are created from how/where they are used.
+    private House(String address, Color color, Style style, State state, boolean hasDeck, List<String> residents) {
+
+        this.address = address;
+        this.color = color;
+        this.style = style;
+        this.state = state;
+        this.hasDeck = hasDeck;
+        this.residents = residents;
+    }
 }

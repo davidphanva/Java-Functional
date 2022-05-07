@@ -1,7 +1,7 @@
 package org.example.scenario.function;
 
-import org.example.data.HouseProviderV1;
-import org.example.model.House;
+import org.example.data.HutProviderV1;
+import org.example.model.Hut;
 import org.example.util.Print;
 
 import java.util.HashMap;
@@ -19,7 +19,7 @@ public class ScenarioV10 {
         System.out.println("ScenarioV10");
         System.out.println("============================");
 
-        final List<House> neighborhood = HouseProviderV1.neighborhood();
+        final List<Hut> neighborhood = HutProviderV1.neighborhood();
 
         // First method - use objects created from static classes
         final Map<String, Integer> map1 = createAddressAndResidentCountMap(
@@ -32,16 +32,16 @@ public class ScenarioV10 {
         // Note: again, we need to specify types for DataExtractor.
         final Map<String, Integer> map2 = createAddressAndResidentCountMap(
                 neighborhood,
-                new Function<House, String>() {
+                new Function<Hut, String>() {
                     @Override
-                    public String apply(House house) {
-                        return house.getAddress();
+                    public String apply(Hut hut) {
+                        return hut.getAddress();
                     }
                 },
-                new Function<House, Integer>() {
+                new Function<Hut, Integer>() {
                     @Override
-                    public Integer apply(House house) {
-                        return house.getResidents().size();
+                    public Integer apply(Hut hut) {
+                        return hut.getResidents().size();
                     }
                 }
         );
@@ -51,45 +51,45 @@ public class ScenarioV10 {
         // Note: As for lambda expressions we don't even need to do anything.
         final Map<String, Integer> map3 = createAddressAndResidentCountMap(
                 neighborhood,
-                house -> house.getAddress(),
-                house -> house.getResidents().size()
+                hut -> hut.getAddress(),
+                hut -> hut.getResidents().size()
         );
         Print.showAddressAndResidentCount(map3);
     }
 
     // Note: We need to provide types to use Function
     public static Map<String, Integer> createAddressAndResidentCountMap(
-            List<House> houses,
-            Function<House, String> addressExtractor,
-            Function<House, Integer> residentCounter) {
+            List<Hut> huts,
+            Function<Hut, String> addressExtractor,
+            Function<Hut, Integer> residentCounter) {
 
         Map<String, Integer> map = new HashMap<>();
 
-        for (House house : houses) {
+        for (Hut hut : huts) {
 
-            map.put(addressExtractor.apply(house), residentCounter.apply(house));
+            map.put(addressExtractor.apply(hut), residentCounter.apply(hut));
         }
 
         return map;
     }
 
-    // Note: We still need to specify House and String as the Input and Output
+    // Note: We still need to specify Hut and String as the Input and Output
     // types.  And now we implement the apply method instead of the extract method.
-    static class AddressExtractorImpl implements Function<House, String> {
+    static class AddressExtractorImpl implements Function<Hut, String> {
 
         @Override
-        public String apply(House house) {
-            return house.getAddress();
+        public String apply(Hut hut) {
+            return hut.getAddress();
         }
     }
 
-    // Note: Similarly, House is the Input type and Integer is the Output
+    // Note: Similarly, Hut is the Input type and Integer is the Output
     // type as Function requires.
-    static class ResidentCountImpl implements Function<House, Integer> {
+    static class ResidentCountImpl implements Function<Hut, Integer> {
 
         @Override
-        public Integer apply(House house) {
-            return house.getResidents().size();
+        public Integer apply(Hut hut) {
+            return hut.getResidents().size();
         }
     }
 

@@ -1,9 +1,9 @@
 package org.example.scenario.consumer;
 
-import org.example.data.HouseProviderV1;
+import org.example.data.HutProviderV1;
 import org.example.model.Color;
-import org.example.model.HomeStyle;
-import org.example.model.House;
+import org.example.model.Style;
+import org.example.model.Hut;
 import org.example.model.State;
 import org.example.util.Print;
 
@@ -26,14 +26,14 @@ public class ScenarioV12 {
         System.out.println("ScenarioV12");
         System.out.println("============================");
 
-        final List<House> neighborhood = HouseProviderV1.neighborhood();
+        final List<Hut> neighborhood = HutProviderV1.neighborhood();
 
-        Print.showNeighborhood(neighborhood);
+        Print.showHuts(neighborhood);
 
-        paintHouses(
+        paintHuts(
                 neighborhood,
                 house -> house.setColor(Color.GREEN));
-        fixHouses(
+        fixHuts(
                 neighborhood,
                 house -> {
                     if (house.getState() == State.BROKEN) {
@@ -45,47 +45,47 @@ public class ScenarioV12 {
         buildDecks(
                 neighborhood,
                 house -> {
-                    if (house.getHomeStyle() != HomeStyle.HISTORIC)
+                    if (house.getStyle() != Style.HISTORIC)
                         house.addDeck();
                 }
         );
 
-        Print.showNeighborhood(neighborhood);
+        Print.showHuts(neighborhood);
     }
 
-    public static void paintHouses(
-            List<House> houses,
-            Consumer<House> painter) {
+    public static void paintHuts(
+            List<Hut> huts,
+            Consumer<Hut> painter) {
 
-        for (House house : houses) {
+        for (Hut hut : huts) {
 
-            painter.accept(house);
+            painter.accept(hut);
         }
     }
 
-    public static void fixHouses(
-            List<House> houses,
-            Consumer<House> repairman) {
+    public static void fixHuts(
+            List<Hut> huts,
+            Consumer<Hut> repairman) {
 
-        for (House house : houses) {
+        for (Hut hut : huts) {
 
-            repairman.accept(house);
+            repairman.accept(hut);
         }
     }
 
     public static void buildDecks(
-            List<House> houses,
-            Consumer<House> deckBuilder) {
+            List<Hut> huts,
+            Consumer<Hut> deckBuilder) {
 
-        for (House house : houses) {
+        for (Hut hut : huts) {
 
-            deckBuilder.accept(house);
+            deckBuilder.accept(hut);
         }
     }
 
     /**
-     * But what if we want to have a painter paint the house, then once that's done
-     * the painter "passes" the house to a repairman, who then "passes" the house
+     * But what if we want to have a painter paint the hut, then once that's done
+     * the painter "passes" the hut to a repairman, who then "passes" the hut
      * to the deck builder?  In other words, use the Adapter Pattern in a
      * functional way.  Can you the code to implement this?  See ScenarioV13.
      */

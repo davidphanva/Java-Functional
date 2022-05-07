@@ -1,6 +1,6 @@
 package org.example.scenario.function;
 
-import org.example.data.HouseProviderV1;
+import org.example.data.HutProviderV1;
 import org.example.model.*;
 import org.example.util.Print;
 
@@ -18,7 +18,7 @@ public class ScenarioV8 {
         System.out.println("ScenarioV8");
         System.out.println("============================");
 
-        final List<House> neighborhood = HouseProviderV1.neighborhood();
+        final List<Hut> neighborhood = HutProviderV1.neighborhood();
 
         // First method - use objects created from static classes
         final Map<String, Integer> map1 = createAddressAndResidentCountMap(
@@ -32,16 +32,16 @@ public class ScenarioV8 {
         // ResidentCounterV2.
         final Map<String, Integer> map2 = createAddressAndResidentCountMap(
                 neighborhood,
-                new AddressExtractorV2<House, String>() {
+                new AddressExtractorV2<Hut, String>() {
                     @Override
-                    public String extract(House house) {
-                        return house.getAddress();
+                    public String extract(Hut hut) {
+                        return hut.getAddress();
                     }
                 },
-                new ResidentCounterV2<House, Integer>() {
+                new ResidentCounterV2<Hut, Integer>() {
                     @Override
-                    public Integer count(House house) {
-                        return house.getResidents().size();
+                    public Integer count(Hut hut) {
+                        return hut.getResidents().size();
                     }
                 }
         );
@@ -51,46 +51,46 @@ public class ScenarioV8 {
         // Note: As for lambda expressions we don't even need to do anything.
         final Map<String, Integer> map3 = createAddressAndResidentCountMap(
                 neighborhood,
-                house -> house.getAddress(),
-                house -> house.getResidents().size()
+                hut -> hut.getAddress(),
+                hut -> hut.getResidents().size()
         );
         Print.showAddressAndResidentCount(map3);
     }
 
     // Note: We need to provide types to use AddressExtractorV2 and ResidentCounterV2
     public static Map<String, Integer> createAddressAndResidentCountMap(
-            List<House> houses,
-            AddressExtractorV2<House, String> addressExtractor,
-            ResidentCounterV2<House, Integer> residentCounter) {
+            List<Hut> huts,
+            AddressExtractorV2<Hut, String> addressExtractor,
+            ResidentCounterV2<Hut, Integer> residentCounter) {
 
         Map<String, Integer> map = new HashMap<>();
 
-        for (House house : houses) {
+        for (Hut hut : huts) {
 
-            map.put(addressExtractor.extract(house), residentCounter.count(house));
+            map.put(addressExtractor.extract(hut), residentCounter.count(hut));
         }
 
         return map;
     }
 
-    // Note: Beside specifying House as the Input type and String as the Output
+    // Note: Beside specifying Hut as the Input type and String as the Output
     // type, the implementation of the extract method does not change.
-    static class AddressExtractorImpl implements AddressExtractorV2<House, String> {
+    static class AddressExtractorImpl implements AddressExtractorV2<Hut, String> {
 
         @Override
-        public String extract(House house) {
-            return house.getAddress();
+        public String extract(Hut hut) {
+            return hut.getAddress();
         }
     }
 
-    // Note: Similarly, House is the Input type and Integer is the Output
+    // Note: Similarly, Hut is the Input type and Integer is the Output
     // type as ResidentCounterV2 requires.  The implementation of the count
     // method does not change.
-    static class ResidentCountImpl implements ResidentCounterV2<House, Integer> {
+    static class ResidentCountImpl implements ResidentCounterV2<Hut, Integer> {
 
         @Override
-        public Integer count(House house) {
-            return house.getResidents().size();
+        public Integer count(Hut hut) {
+            return hut.getResidents().size();
         }
     }
     /**

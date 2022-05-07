@@ -1,15 +1,15 @@
 package org.example.scenario.predicate;
 
-import org.example.data.HouseProviderV1;
-import org.example.model.HomeStyle;
-import org.example.model.House;
+import org.example.data.HutProviderV1;
+import org.example.model.Style;
+import org.example.model.Hut;
 import org.example.util.Print;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * ScenarioV3 demonstrates searching for House objects by different criteria.
+ * ScenarioV3 demonstrates searching for Hut objects by different criteria.
  * But the logic is pulled out of the search method and placed into an object.
  */
 public class ScenarioV3 {
@@ -18,22 +18,22 @@ public class ScenarioV3 {
         System.out.println("ScenarioV3");
         System.out.println("============================");
 
-        final List<House> neighborhood = HouseProviderV1.neighborhood();
+        final List<Hut> neighborhood = HutProviderV1.neighborhood();
 
         final ResidentCountCriterion fourResidentCriterion = new ResidentCountCriterion(4);
-        final List<House> fourResidents = searchByCriterion(neighborhood, fourResidentCriterion);
-        Print.showNeighborhood(fourResidents);
+        final List<Hut> fourResidents = searchByCriterion(neighborhood, fourResidentCriterion);
+        Print.showHuts(fourResidents);
 
-        final HomeStyleCriterion modernHomeCriterion = new HomeStyleCriterion(HomeStyle.MODERN);
-        final List<House> modernHomes = searchByCriterion(neighborhood, modernHomeCriterion);
-        Print.showNeighborhood(modernHomes);
+        final HomeStyleCriterion modernHomeCriterion = new HomeStyleCriterion(Style.MODERN);
+        final List<Hut> modernHomes = searchByCriterion(neighborhood, modernHomeCriterion);
+        Print.showHuts(modernHomes);
 
         final AddressCriterion stoogiesHomeCriterion = new AddressCriterion("123 Comical Lane");
-        final List<House> stoogiesHome = searchByCriterion(neighborhood, stoogiesHomeCriterion);
-        Print.showNeighborhood(stoogiesHome);
+        final List<Hut> stoogiesHome = searchByCriterion(neighborhood, stoogiesHomeCriterion);
+        Print.showHuts(stoogiesHome);
     }
 
-    static class ResidentCountCriterion implements HouseSearchCriterion<House> {
+    static class ResidentCountCriterion implements HutSearchCriterion<Hut> {
 
         private int desiredCount;
 
@@ -43,29 +43,29 @@ public class ScenarioV3 {
         }
 
         @Override
-        public boolean matchesWith(House house) {
+        public boolean matchesWith(Hut hut) {
 
-            return house.getResidents().size() == desiredCount;
+            return hut.getResidents().size() == desiredCount;
         }
     }
 
-    static class HomeStyleCriterion implements HouseSearchCriterion<House> {
+    static class HomeStyleCriterion implements HutSearchCriterion<Hut> {
 
-        private HomeStyle desiredHomeStyle;
+        private Style desiredStyle;
 
-        HomeStyleCriterion(HomeStyle desiredHomeStyle) {
+        HomeStyleCriterion(Style desiredStyle) {
 
-            this.desiredHomeStyle = desiredHomeStyle;
+            this.desiredStyle = desiredStyle;
         }
 
         @Override
-        public boolean matchesWith(House house) {
+        public boolean matchesWith(Hut hut) {
 
-            return (house.getHomeStyle() == desiredHomeStyle);
+            return (hut.getStyle() == desiredStyle);
         }
     }
 
-    static class AddressCriterion implements HouseSearchCriterion<House> {
+    static class AddressCriterion implements HutSearchCriterion<Hut> {
 
         private String desiredAddress;
 
@@ -75,19 +75,19 @@ public class ScenarioV3 {
         }
 
         @Override
-        public boolean matchesWith(House house) {
-            return (house.getAddress().equalsIgnoreCase(desiredAddress));
+        public boolean matchesWith(Hut hut) {
+            return (hut.getAddress().equalsIgnoreCase(desiredAddress));
         }
     }
 
-    public static List<House> searchByCriterion(List<House> houses, HouseSearchCriterion criteria) {
+    public static List<Hut> searchByCriterion(List<Hut> huts, HutSearchCriterion criteria) {
 
-        List<House> found = new ArrayList<>();
+        List<Hut> found = new ArrayList<>();
 
-        for (House house : houses) {
+        for (Hut hut : huts) {
 
-            if (criteria.matchesWith(house))
-                found.add(house);
+            if (criteria.matchesWith(hut))
+                found.add(hut);
         }
 
         return found;

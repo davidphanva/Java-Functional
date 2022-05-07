@@ -1,9 +1,9 @@
 package org.example.scenario.function;
 
-import org.example.data.HouseProviderV1;
+import org.example.data.HutProviderV1;
 import org.example.model.Color;
-import org.example.model.HomeStyle;
-import org.example.model.House;
+import org.example.model.Style;
+import org.example.model.Hut;
 import org.example.model.State;
 import org.example.util.Print;
 
@@ -19,50 +19,50 @@ public class ScenarioV13 {
         System.out.println("ScenarioV13");
         System.out.println("============================");
 
-        final List<House> neighborhood = HouseProviderV1.neighborhood();
+        final List<Hut> neighborhood = HutProviderV1.neighborhood();
 
-        Print.showNeighborhood(neighborhood);
+        Print.showHuts(neighborhood);
 
-        Function<House, House> painter = house -> {
-            house.setColor(Color.GREEN);
+        Function<Hut, Hut> painter = hut -> {
+            hut.setColor(Color.GREEN);
 
-            return house;
+            return hut;
         };
 
-        Function<House, House> repairman = house -> {
-            if (house.getState() == State.BROKEN) {
-                house.setState(State.FUNCTIONAL);
+        Function<Hut, Hut> repairman = hut -> {
+            if (hut.getState() == State.BROKEN) {
+                hut.setState(State.FUNCTIONAL);
             }
 
-            return house;
+            return hut;
         };
 
-        Function<House, House> deckBuilder = house -> {
-            if (house.getHomeStyle() != HomeStyle.HISTORIC)
-                house.addDeck();
+        Function<Hut, Hut> deckBuilder = hut -> {
+            if (hut.getStyle() != Style.HISTORIC)
+                hut.addDeck();
 
-            return house;
+            return hut;
         };
 
-        Function<House, House> constructionCompany = painter.andThen(repairman).andThen(deckBuilder);
+        Function<Hut, Hut> constructionCompany = painter.andThen(repairman).andThen(deckBuilder);
 
-        performWorkOnHouses(neighborhood, constructionCompany);
+        performWorkOnHuts(neighborhood, constructionCompany);
 
-        Print.showNeighborhood(neighborhood);
+        Print.showHuts(neighborhood);
     }
 
     /**
-     * In ScenarioV12, we had 3 static methods - one for each function (painting, house repair, &
+     * In ScenarioV12, we had 3 static methods - one for each function (painting, hut repair, &
      * deck building.  Here we have a single method, but we use the Function interface to
      * chain the supporting functions together.
      */
-    public static void performWorkOnHouses(
-            List<House> houses,
-            Function<House, House> company) {
+    public static void performWorkOnHuts(
+            List<Hut> huts,
+            Function<Hut, Hut> company) {
 
-        for (House house : houses) {
+        for (Hut hut : huts) {
 
-            company.apply(house);
+            company.apply(hut);
         }
     }
 

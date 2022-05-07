@@ -1,9 +1,9 @@
 package org.example.scenario.function;
 
-import org.example.model.House;
+import org.example.model.Hut;
 
 @FunctionalInterface
 public interface ResidentCounterV1 {
 
-    Integer count(House house);
+    Integer count(Hut hut);
 }

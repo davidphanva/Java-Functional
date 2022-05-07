@@ -1,8 +1,8 @@
 package org.example.scenario.predicate;
 
-import org.example.data.HouseProviderV1;
-import org.example.model.HomeStyle;
-import org.example.model.House;
+import org.example.data.HutProviderV1;
+import org.example.model.Style;
+import org.example.model.Hut;
 import org.example.util.Print;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 /**
- * In ScenarioV6 we're going to search for House objects that require complex
+ * In ScenarioV6 we're going to search for Hut objects that require complex
  * criteria.  And we use Predicate to specify the logic associated with that
  * complex criteria.
  */
@@ -20,35 +20,35 @@ public class ScenarioV6 {
         System.out.println("ScenarioV6");
         System.out.println("============================");
 
-        final List<House> neighborhood = HouseProviderV1.neighborhood();
+        final List<Hut> neighborhood = HutProviderV1.neighborhood();
 
-        final Predicate<House> atLeast4ResidentsCriterion =
-                house -> house.getResidents().size() >= 4;
+        final Predicate<Hut> atLeast4ResidentsCriterion =
+                hut -> hut.getResidents().size() >= 4;
 
-        final List<House> atLeast4Residents = searchByCriterion(neighborhood, atLeast4ResidentsCriterion);
-        Print.showNeighborhood(atLeast4Residents);
+        final List<Hut> atLeast4Residents = searchByCriterion(neighborhood, atLeast4ResidentsCriterion);
+        Print.showHuts(atLeast4Residents);
 
-        final Predicate<House> modernHomeCriterion =
-                house -> house.getHomeStyle() == HomeStyle.MODERN;
-        final List<House> modernHomes = searchByCriterion(neighborhood, modernHomeCriterion);
-        Print.showNeighborhood(modernHomes);
+        final Predicate<Hut> modernHomeCriterion =
+                hut -> hut.getStyle() == Style.MODERN;
+        final List<Hut> modernHomes = searchByCriterion(neighborhood, modernHomeCriterion);
+        Print.showHuts(modernHomes);
 
-        final Predicate<House> atLeast4ResidentsAndModernHomeCriterion = atLeast4ResidentsCriterion
+        final Predicate<Hut> atLeast4ResidentsAndModernHomeCriterion = atLeast4ResidentsCriterion
                 .and(modernHomeCriterion);
-        final List<House> atLeast4ResidentsAndModernHome = searchByCriterion(
+        final List<Hut> atLeast4ResidentsAndModernHome = searchByCriterion(
                 neighborhood,
                 atLeast4ResidentsAndModernHomeCriterion);
-        Print.showNeighborhood(atLeast4ResidentsAndModernHome);
+        Print.showHuts(atLeast4ResidentsAndModernHome);
     }
 
-    public static List<House> searchByCriterion(List<House> houses, Predicate<House> criterion) {
+    public static List<Hut> searchByCriterion(List<Hut> huts, Predicate<Hut> criterion) {
 
-        List<House> found = new ArrayList<>();
+        List<Hut> found = new ArrayList<>();
 
-        for (House house : houses) {
+        for (Hut hut : huts) {
 
-            if (criterion.test(house))
-                found.add(house);
+            if (criterion.test(hut))
+                found.add(hut);
         }
 
         return found;

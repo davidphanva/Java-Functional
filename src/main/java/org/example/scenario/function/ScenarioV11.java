@@ -1,7 +1,7 @@
 package org.example.scenario.function;
 
-import org.example.data.HouseProviderV1;
-import org.example.model.House;
+import org.example.data.HutProviderV1;
+import org.example.model.Hut;
 import org.example.util.Print;
 
 import java.util.HashMap;
@@ -30,12 +30,12 @@ public class ScenarioV11 {
         System.out.println("ScenarioV11");
         System.out.println("============================");
 
-        final List<House> neighborhood = HouseProviderV1.neighborhood();
+        final List<Hut> neighborhood = HutProviderV1.neighborhood();
 
         // Here we strictly use lambda expressions
         final Map<String, Integer> map = computeAddressSum(
                 neighborhood,
-                house -> house.getAddress(),
+                hut -> hut.getAddress(),
                 address -> address.substring(0, address.indexOf(' ')),
                 streetNumber -> {
                     char[] charArray = streetNumber.toCharArray();
@@ -49,21 +49,21 @@ public class ScenarioV11 {
                     return sum;
                 }
         );
-        Print.showAddressAndSumOfHouseNumber(map);
+        Print.showAddressAndSumOfNumber(map);
     }
 
     public static Map<String, Integer> computeAddressSum(
-            List<House> houses,
-            Function<House, String> addressExtractor,
-            Function<String, String> houseNumberExtractor,
+            List<Hut> huts,
+            Function<Hut, String> addressExtractor,
+            Function<String, String> hutNumberExtractor,
             Function<String, Integer> sumExtractor) {
 
         Map<String, Integer> map = new HashMap<>();
 
-        for (House house : houses) {
+        for (Hut hut : huts) {
 
-            Integer sum = houseNumberExtractor.compose(addressExtractor).andThen(sumExtractor).apply(house);
-            map.put(addressExtractor.apply(house), sum);
+            Integer sum = hutNumberExtractor.compose(addressExtractor).andThen(sumExtractor).apply(hut);
+            map.put(addressExtractor.apply(hut), sum);
         }
 
         return map;
